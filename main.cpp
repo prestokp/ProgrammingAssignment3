@@ -43,8 +43,12 @@ int main()
     } while (menuChoice != 4);
 
     // present menu and get user's choice
+    cout << "Grade Report Program " << endl;
+    cout << endl;
+    cout << "1: " << "Display Average Grade " << endl;
+    cout << "2: " << "Display Maximum Grade " << endl;
+    cout << "3: " << "Display "
 
-    
 
     // Process the choice
 
