@@ -10,7 +10,8 @@
 #include <cstdlib>		// exit()
 #include <string>		// strings
 #include <fstream>		// file processing
-#include <iomanip>		// stream manipulation
+#include <iomanip>      // stream manipulation
+#include <stdio.h>
 using namespace std;
 
 // Global variables
@@ -47,11 +48,29 @@ int main()
     cout << endl;
     cout << "1: " << "Display Average Grade " << endl;
     cout << "2: " << "Display Maximum Grade " << endl;
-    cout << "3: " << "Display "
+    cout << "3: " << "Display Minimum Grade " << endl;
+    cout << "4: " << "Exit Program " << endl;
 
 
     // Process the choice
+    cout << "Enter your choice (1-4): " << endl;
 
+    switch (menuChoice){
+        case 1: if (menuChoice == 1){
+            displayAverages();
+            break;
+        }
+
+        case 2: if (menuChoice == 2){
+            displayMax();
+            break;
+        }
+
+        case 3: if (menuChoice == 3){
+            displayMin();
+
+        }
+    }//Switch statement delimiter
 
 
     // End of program
