@@ -54,6 +54,7 @@ int main()
 
     // Process the choice
     cout << "Enter your choice (1-4): " << endl;
+    cin >> menuChoice;
 
     switch (menuChoice){
         case 1: if (menuChoice == 1){
