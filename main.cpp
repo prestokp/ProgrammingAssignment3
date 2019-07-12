@@ -37,45 +37,58 @@ int main()
 
     // Get students and grades
 
+    fstream dataFile; //Creating a file object in an attempt to open the file
+    dataFile.open(FILENAME);
 
-    // Loop until user says to quit
-    do {
 
-    } while (menuChoice != 4);
-
-    // present menu and get user's choice
+    // present menu and get user's choice, needs to be formatted
     cout << "Grade Report Program " << endl;
     cout << endl;
     cout << "1: " << "Display Average Grade " << endl;
     cout << "2: " << "Display Maximum Grade " << endl;
     cout << "3: " << "Display Minimum Grade " << endl;
     cout << "4: " << "Exit Program " << endl;
-
-
-    // Process the choice
     cout << "Enter your choice (1-4): " << endl;
     cin >> menuChoice;
 
+    // Loop until user says to quit
+    do {
+
+    } while (menuChoice != 4); //Might have to reorder the code here to get a menu choice initialization
+
+    // Process the choice
+
     switch (menuChoice){
         case 1: if (menuChoice == 1){
-            displayAverages();
+            displayAverages(studentNames, studentGrades, numberOfStudents);
             break;
         }
 
         case 2: if (menuChoice == 2){
-            displayMax();
+            displayMax(studentNames, studentGrades, studentNames);
             break;
         }
 
         case 3: if (menuChoice == 3){
-            displayMin();
-
+            displayMin(studentNames, studentGrades, numberOfStudents);
+            break;
         }
+
+        case 4: if (menuChoice == 4){
+            exit(0);
+            break;
+        }
+
+        default:
+            cout << "Please enter a number 1-4";
+            break;
+
     }//Switch statement delimiter
 
 
     // End of program
     //	Make sure we place the end message on a new line
+    cout << "The program has ended" << endl;
     cout << endl;
 
     return 0;
@@ -99,6 +112,7 @@ NOTE:	students[] and grades[] are meant to be parralel arrays. students[0] and g
 ************************************************************/
 int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string fileName, int maxStudents)
 {
+
     return 0;	// for stub out purposes, change this in your code
 }
 
@@ -126,6 +140,7 @@ PRE:	students[] and grades[] contain values for studentCount elements
 POST:	table of student names, maximum grades, and letter grades is displayed
 ************************************************************/
 void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
+//Bubble sorting achieves the maximum display
 {
 
 }
@@ -140,6 +155,7 @@ PRE:	students[] and grades[] contain values for studentCount elements
 POST:	table of student names, minimum grades, and letter grades is displayed
 ************************************************************/
 void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
+//Bubble sorting achieves the minimum display
 {
 
 }
@@ -152,7 +168,32 @@ POST:	The corresponding letter grade of the numerical grade is returned
 ************************************************************/
 char getLetterGrade(double grade)
 {
-    return ' ';
+    char letterGrade; //declares a character variable to hold the letter grade
+
+    //Letter grades are assigned based off of conditional statements and then returns the
+    //variable
+    if(grade <= 100 && grade >= 90){
+        cout << "Your letter Grade is a A";
+        letterGrade = 'A';
+    }
+    else if(grade <= 89 && grade >= 80){
+        cout << "Your letter grade is a B";
+        letterGrade = 'B';
+    }
+    else if (grade <= 79 && grade >= 70){
+        cout << "Your letter grade is a C";
+        letterGrade = 'C';
+    }
+    else if (grade <= 69 && grade >= 60){
+        cout << "Your letter grade is a D";
+        letterGrade = 'D';
+    }
+    else{
+        cout << "Your letter grade is an F";
+        letterGrade = 'F';
+    }
+
+    return letterGrade;
 }
 
 /***********************************************************
@@ -163,6 +204,7 @@ PRE:	students[] contains studentCount names
 POST:	The length of the longest string in students[] is returned
 ************************************************************/
 int getLongestNameLength(string students[], int studentCount)
+//Bubble sorting achieves the longest string length display
 {
     return 0;
 }
