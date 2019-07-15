@@ -54,8 +54,6 @@ int main()
     // Loop until user says to quit
     do {
 
-    } while (menuChoice != 4); //Might have to reorder the code here to get a menu choice initialization
-
     // Process the choice
 
     switch (menuChoice){
@@ -65,7 +63,7 @@ int main()
         }
 
         case 2: if (menuChoice == 2){
-            displayMax(studentNames, studentGrades, studentNames);
+            //displayMax(studentNames, studentGrades, studentNames);
             break;
         }
 
@@ -76,7 +74,6 @@ int main()
 
         case 4: if (menuChoice == 4){
             exit(0);
-            break;
         }
 
         default:
@@ -85,6 +82,7 @@ int main()
 
     }//Switch statement delimiter
 
+} while (menuChoice != 4); //Might have to reorder the code here to get a menu choice initialization
 
     // End of program
     //	Make sure we place the end message on a new line
