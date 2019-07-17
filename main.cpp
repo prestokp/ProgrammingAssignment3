@@ -142,19 +142,21 @@ void displayAverages(string students[], int grades[][MAX_GRADES], int studentCou
     //Must be a nested for loop because the array from file is a two dimensional array
 
     int Count; //Counting variable for the outer for loop
-
-    for (Count = 0; Count =< students[studentCount]; Count++){
+    for (Count = 0; Count <= studentCount; Count++){
 
         //Inner loop definition to average out the score per student
         int count;
         double average, sum = 0;
 
         for (count = 0; count < MAX_GRADES; count++){
-            sum = sum + grades[studentCount][count];} //Inner For loop delimiter
+            sum = sum + grades[studentCount][count];
+        } //Inner For loop delimiter
 
         average = sum/MAX_GRADES;
+        cout << average;
 
     }//Outer for loop delimiter
+
 
 
 }
@@ -175,18 +177,21 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
 //Bubble sorting achieves the maximum display
 //Must be a nested for loop because the array from file is a two dimensional array
 {
+    int Count; //Counting variable for the outer for loop
+    for (Count = 0; Count <= studentCount; Count++) {
 
-    int count;
-    int highest;
-    highest = grades[][0];
-    for (count = 1; count < MAX_GRADES; count++){
+        int count; //counting variable for the inner loop
+        int highest;
+        highest = grades[Count][0];
+        for (count = 1; count < MAX_GRADES; count++) {
 
-        if (grades[][count] > highest){
-            highest = grades[][count];
-        }//Conditional Delimiter
+            if (grades[Count][count] > highest) {
+                highest = grades[Count][count];
+            }//Conditional Delimiter
 
-    }//Inner for loop delimiter
+        }//Inner for loop delimiter
 
+    }//Outer for loop delimiter
 }
 
 /***********************************************************
@@ -206,17 +211,21 @@ void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
 //Must be a nested for loop because the array from file is a two dimensional array
 
 {
+    int Count; //Counting variable for the outer for loop
+    for (Count = 0; Count <= studentCount; Count++) {
 
-    int count;
-    int lowest;
-    lowest = grades[][0];
-    for (count = 1; count < MAX_GRADES; count++){
+        int count;
+        int lowest;
+        lowest = grades[Count][0];
+        for (count = 1; count < MAX_GRADES; count++) {
 
-        if (grades[][count] < lowest){
-            lowest = grades[][count];
-        }//Conditional Delimiter
+            if (grades[Count][count] < lowest) {
+                lowest = grades[Count][count];
+            }//Conditional Delimiter
 
-    }//Inner for loop delimiter
+        }//Inner for loop delimiter
+
+    }//Outer for loop delimiter
 
 }
 
@@ -266,7 +275,9 @@ POST:	The length of the longest string in students[] is returned
 ************************************************************/
 
 int getLongestNameLength(string students[], int studentCount)
+
 //Bubble sorting achieves the longest string length display
 {
+
     return 0;
 }
