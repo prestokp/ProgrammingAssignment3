@@ -154,7 +154,7 @@ void displayAverages(string students[], int grades[][MAX_GRADES], int studentCou
 
         average = sum/MAX_GRADES;
         cout << average;
-
+        cout << setw(25) << assignmentName[0] << ": " << setw(4) << right << grades[0] << endl;
     }//Outer for loop delimiter
 
 
@@ -190,7 +190,7 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
             }//Conditional Delimiter
 
         }//Inner for loop delimiter
-
+        cout << setw(25) << assignmentName[0] << ": " << setw(4) << right << grades[0] << endl;
     }//Outer for loop delimiter
 }
 
@@ -224,7 +224,7 @@ void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
             }//Conditional Delimiter
 
         }//Inner for loop delimiter
-
+        cout << setw(25) << assignmentName[0] << ": " << setw(4) << right << grades[0] << endl;
     }//Outer for loop delimiter
 
 }
