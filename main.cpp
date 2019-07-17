@@ -40,22 +40,22 @@ int main()
     fstream dataFile; //Creating a file object in an attempt to open the file
     dataFile.open(FILENAME);
 
-
-    // present menu and get user's choice, needs to be formatted
-    cout << "Grade Report Program " << endl;
-    cout << endl;
-    cout << "1: " << "Display Average Grade " << endl;
-    cout << "2: " << "Display Maximum Grade " << endl;
-    cout << "3: " << "Display Minimum Grade " << endl;
-    cout << "4: " << "Exit Program " << endl;
-    cout << "Enter your choice (1-4): " << endl;
-    cin >> menuChoice;
-
     // Loop until user says to quit
+
     do {
 
-    // Process the choice
+        cout << "Grade Report Program " << endl;
+        cout << endl;
+        cout << "1: " << "Display Average Grade " << endl;
+        cout << "2: " << "Display Maximum Grade " << endl;
+        cout << "3: " << "Display Minimum Grade " << endl;
+        cout << "4: " << "Exit Program " << endl;
+        cout << "Enter your choice (1-4): " << endl;
+        cin >> menuChoice;
 
+        while (getchar() != '\n'); //empties the buffer
+
+    // Process the choice
     switch (menuChoice){
         case 1: if (menuChoice == 1){
             displayAverages(studentNames, studentGrades, numberOfStudents);
@@ -77,14 +77,23 @@ int main()
         }
 
         default:
+            cout << menuChoice << " is not a valid choice. " << endl;
             cout << "Please enter a number 1-4";
             break;
 
     }//Switch statement delimiter
 
+    //Pause to read the screen and then clear the screen
+    if (menuChoice != 4){
+        cout << endl;
+        system("PAUSE");
+        system("CLS");
+    }
+
 } while (menuChoice != 4); //Might have to reorder the code here to get a menu choice initialization
 
     // End of program
+
     //	Make sure we place the end message on a new line
     cout << "The program has ended" << endl;
     cout << endl;
@@ -93,6 +102,7 @@ int main()
 }
 
 /***********************************************************
+
 loadStudentNameGrades opens and read fileName. It will read in two strings, concatenate them, and then save
 to the students array. It then reads five integers and save each to the grades array. The function will return
 the actual number of student/grade combinations read
@@ -107,7 +117,9 @@ POST:	students[] contains the names of up to maxStudents
 		The number of student/grade combinations actually read from the file is returned. This value can range
 		between 0 <= numStudents <= maxStudents
 NOTE:	students[] and grades[] are meant to be parralel arrays. students[0] and grades[0] are the same student
-************************************************************/
+
+ ************************************************************/
+
 int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string fileName, int maxStudents)
 {
 
@@ -115,6 +127,7 @@ int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string f
 }
 
 /***********************************************************
+
 displayAverages calculates the average of each student and displays the
 students name, average, and letter grade of the average in a table
 PARAM:	students[] is an array of strings that contains the names of studentCount students
@@ -123,12 +136,31 @@ PARAM:	students[] is an array of strings that contains the names of studentCount
 PRE:	students[] and grades[] contain values for studentCount elements
 POST:	table of student names, averages, and letter grades is displayed
 ************************************************************/
+
 void displayAverages(string students[], int grades[][MAX_GRADES], int studentCount)
 {
+    //Must be a nested for loop because the array from file is a two dimensional array
+
+    int Count; //Counting variable for the outer for loop
+
+    for (Count = 0; Count =< students[studentCount]; Count++){
+
+        //Inner loop definition to average out the score per student
+        int count;
+        double average, sum = 0;
+
+        for (count = 0; count < MAX_GRADES; count++){
+            sum = sum + grades[studentCount][count];} //Inner For loop delimiter
+
+        average = sum/MAX_GRADES;
+
+    }//Outer for loop delimiter
+
 
 }
 
 /***********************************************************
+
 displayMax calculates the maximum grade of each student and displays the
 students name, maximum grade, and letter grade of the maximum grade in a table
 PARAM:	students[] is an array of strings that contains the names of studentCount students
@@ -137,13 +169,29 @@ PARAM:	students[] is an array of strings that contains the names of studentCount
 PRE:	students[] and grades[] contain values for studentCount elements
 POST:	table of student names, maximum grades, and letter grades is displayed
 ************************************************************/
+
 void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
+
 //Bubble sorting achieves the maximum display
+//Must be a nested for loop because the array from file is a two dimensional array
 {
+
+    int count;
+    int highest;
+    highest = grades[][0];
+    for (count = 1; count < MAX_GRADES; count++){
+
+        if (grades[][count] > highest){
+            highest = grades[][count];
+        }//Conditional Delimiter
+
+    }//Inner for loop delimiter
+
 
 }
 
 /***********************************************************
+
 displayMin calculates the minimum grade of each student and displays the
 students name, minimum grade, and letter grade of the minimum grade in a table
 PARAM:	students[] is an array of strings that contains the names of studentCount students
@@ -152,8 +200,12 @@ PARAM:	students[] is an array of strings that contains the names of studentCount
 PRE:	students[] and grades[] contain values for studentCount elements
 POST:	table of student names, minimum grades, and letter grades is displayed
 ************************************************************/
+
 void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
+
 //Bubble sorting achieves the minimum display
+//Must be a nested for loop because the array from file is a two dimensional array
+
 {
 
 }
@@ -164,6 +216,7 @@ PARAM:	grade is the numerical grade to convert. Expected range is 0 <= grade <= 
 PRE:	grade contains a value in the correct range
 POST:	The corresponding letter grade of the numerical grade is returned
 ************************************************************/
+
 char getLetterGrade(double grade)
 {
     char letterGrade; //declares a character variable to hold the letter grade
@@ -201,6 +254,7 @@ PARAM:	students[] is an array of strings that contains the name of students
 PRE:	students[] contains studentCount names
 POST:	The length of the longest string in students[] is returned
 ************************************************************/
+
 int getLongestNameLength(string students[], int studentCount)
 //Bubble sorting achieves the longest string length display
 {
