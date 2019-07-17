@@ -106,7 +106,7 @@ int main()
 loadStudentNameGrades opens and read fileName. It will read in two strings, concatenate them, and then save
 to the students array. It then reads five integers and save each to the grades array. The function will return
 the actual number of student/grade combinations read
-PARAM:	students is an array of strings that can hold up ot maxStudents values
+PARAM:	students is an array of strings that can hold up to maxStudents values
 		grades is a two dimensional array for holding the grades of each student
 		fileName is the name of the file that will be opened and read
 		maxStudents is the maximum number of students that we will read from the file
@@ -187,7 +187,6 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
 
     }//Inner for loop delimiter
 
-
 }
 
 /***********************************************************
@@ -207,6 +206,17 @@ void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
 //Must be a nested for loop because the array from file is a two dimensional array
 
 {
+
+    int count;
+    int lowest;
+    lowest = grades[][0];
+    for (count = 1; count < MAX_GRADES; count++){
+
+        if (grades[][count] < lowest){
+            lowest = grades[][count];
+        }//Conditional Delimiter
+
+    }//Inner for loop delimiter
 
 }
 
