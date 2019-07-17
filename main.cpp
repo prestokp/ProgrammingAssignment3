@@ -63,7 +63,7 @@ int main()
         }
 
         case 2: if (menuChoice == 2){
-            //displayMax(studentNames, studentGrades, studentNames);
+            displayMax(studentNames, studentGrades, numberOfStudents);
             break;
         }
 
@@ -152,9 +152,13 @@ void displayAverages(string students[], int grades[][MAX_GRADES], int studentCou
             sum = sum + grades[studentCount][count];
         } //Inner For loop delimiter
 
-        average = sum/MAX_GRADES;
-        cout << average;
-        cout << setw(25) << assignmentName[0] << ": " << setw(4) << right << grades[0] << endl;
+        average = sum/MAX_GRADES; //Contains the average grade as a double
+        char gradeLetter = getLetterGrade(average); //Passes the average into the LetterGrade function, assigned to a
+                                                    //character variable
+
+        cout << setw(25) << students[Count] << ": " << setw(4) << right << average
+            << setw(4) << right << gradeLetter << endl; //formatted display
+
     }//Outer for loop delimiter
 
 
@@ -181,7 +185,7 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
     for (Count = 0; Count <= studentCount; Count++) {
 
         int count; //counting variable for the inner loop
-        int highest;
+        double highest;
         highest = grades[Count][0];
         for (count = 1; count < MAX_GRADES; count++) {
 
@@ -190,7 +194,12 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
             }//Conditional Delimiter
 
         }//Inner for loop delimiter
-        cout << setw(25) << assignmentName[0] << ": " << setw(4) << right << grades[0] << endl;
+        char gradeLetter = getLetterGrade(highest); //Passes the highest grade into the LetterGrade function, assigned to a
+                                                    //character variable
+
+        cout << setw(25) << students[Count] << ": " << setw(4) << right << highest
+            << setw(4) << right << gradeLetter << endl; //formatted display
+
     }//Outer for loop delimiter
 }
 
@@ -215,7 +224,7 @@ void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
     for (Count = 0; Count <= studentCount; Count++) {
 
         int count;
-        int lowest;
+        double lowest;
         lowest = grades[Count][0];
         for (count = 1; count < MAX_GRADES; count++) {
 
@@ -224,7 +233,12 @@ void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
             }//Conditional Delimiter
 
         }//Inner for loop delimiter
-        cout << setw(25) << assignmentName[0] << ": " << setw(4) << right << grades[0] << endl;
+        char gradeLetter = getLetterGrade(lowest); //Passes the highest grade into the LetterGrade function, assigned to a
+                                                    //character variable
+
+        cout << setw(25) << students[Count] << ": " << setw(4) << right << lowest
+            << setw(4) << right << gradeLetter << endl; //formatted display
+
     }//Outer for loop delimiter
 
 }
