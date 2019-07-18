@@ -37,7 +37,7 @@ int main()
 
     // Get students and grades
 
-    fstream dataFile; //Creating a file object in an attempt to open the file
+    ifstream dataFile; //Creating a file object in an attempt to open the file
     dataFile.open(FILENAME);
 
     // Loop until user says to quit
