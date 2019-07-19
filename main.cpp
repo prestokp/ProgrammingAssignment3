@@ -11,12 +11,11 @@
 #include <string>		// strings
 #include <fstream>		// file processing
 #include <iomanip>      // stream manipulation
-#include <stdio.h>
 using namespace std;
 
 // Global variables
-const int MAX_STUDENTS = 25;	// We will not process more than 25 students even if the file contains more
-const int MAX_GRADES = 5;		// Each student has exactly 5 grades
+const int MAX_STUDENTS = 25;	            // We will not process more than 25 students even if the file contains more
+const int MAX_GRADES = 5;		            // Each student has exactly 5 grades
 const string FILENAME = "NamesGrades.txt";	// The name of the file that you will read
 
 // Function declarations
@@ -39,14 +38,13 @@ int main()
     try{
         numberOfStudents = loadStudentNamesGrades(studentNames, studentGrades, FILENAME, MAX_STUDENTS);
     }
-    catch(const char*e){
+    catch(const char* e){
         cout << e << endl << endl;
         system("PAUSE");
         return 0;
     }
 
     // Loop until user says to quit
-
     do {
 
         cout << "Grade Report Program " << endl;
@@ -128,11 +126,11 @@ int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string f
 {
     ifstream inFile; //Establishes the input file stream
     string studentNames; //contains the student names
-    int studentGrades;   //contains the student grades
+    string studentGrades;   //contains the student grades
     int numStudents = 0; //Number of students read in
 
     //Opening the file
-    inFile.open(FILENAME);
+    inFile.open(fileName);
 
     //Throws an exception if the file cannot be opened
     if(!inFile){
@@ -143,7 +141,7 @@ int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string f
     for (int i = 0; i < maxStudents && (inFile >> studentNames >> studentGrades); i++, numStudents ++){
 
         //Linking the student names with their respective grades
-        students[i] = studentNames + " " + studentGrades;
+        students[i] = studentNames/*.append(studentGrades)*/ + " " + studentGrades;
 
         //Loop through all of the student grades in each row
         for (int j = 0; j < MAX_GRADES; j++){
@@ -225,9 +223,9 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
 
     //Header table
     cout << setprecision(1) << fixed << showpoint;
-    cout << "\n\nGrade Averages\n";
+    cout << "\n\nHighest Grade\n";
     cout << setw(maxNameLength + 1) << left << "Name"
-         << setw(25) << right << "Average" << setw(4) << right << "Letter Grade";
+         << setw(25) << right << "Highest Grade" << setw(4) << right << "Letter Grade";
     cout << endl << endl;
 
     for (int Count = 0; Count <= studentCount; Count++) {
@@ -263,8 +261,15 @@ void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
 //Bubble sorting achieves the minimum display
 //Must be a nested for loop because the array from file is a two dimensional array
 {
-    double lowest;
+    double lowest;                                                    //Holds the lowest grade
     int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
+
+    //Header table
+    cout << setprecision(1) << fixed << showpoint;
+    cout << "\n\nLowest Grade\n";
+    cout << setw(maxNameLength + 1) << left << "Name"
+         << setw(25) << right << "Lowest Grade" << setw(4) << right << "Letter Grade";
+    cout << endl << endl;
 
     for (int Count = 0; Count <= studentCount; Count++) {
 
@@ -332,9 +337,15 @@ POST:	The length of the longest string in students[] is returned
 ************************************************************/
 
 int getLongestNameLength(string students[], int studentCount)
-
 //Bubble sorting achieves the longest string length display
 {
+    int maxNameLength = 0; //Holds the longest name count
 
+    for (int i = 0; i < studentCount; i++){
+        //Testing to see which names are longer
+        if (students[i].length() > maxNameLength){
+            maxNameLength = students[i].length();
+        }
+    }
     return 0;
 }
