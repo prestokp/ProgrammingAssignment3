@@ -36,9 +36,14 @@ int main()
     int menuChoice;                                 //Variable to hold the integer menu choice
 
     // Get students and grades
-
-    ifstream dataFile; //Creating a file object in an attempt to open the file
-    dataFile.open(FILENAME);
+    try{
+        numberOfStudents = loadStudentNamesGrades(studentNames, studentGrades, FILENAME, MAX_STUDENTS);
+    }
+    catch(const char*e){
+        cout << e << endl << endl;
+        system("PAUSE");
+        return 0;
+    }
 
     // Loop until user says to quit
 
@@ -57,24 +62,23 @@ int main()
 
     // Process the choice
     switch (menuChoice){
-        case 1: if (menuChoice == 1){
+        case 1: //Displays the averages
             displayAverages(studentNames, studentGrades, numberOfStudents);
             break;
-        }
 
-        case 2: if (menuChoice == 2){
+
+        case 2: //Displays the maximum student grade
             displayMax(studentNames, studentGrades, numberOfStudents);
             break;
-        }
 
-        case 3: if (menuChoice == 3){
+
+        case 3: //Displays the minimum student grade
             displayMin(studentNames, studentGrades, numberOfStudents);
             break;
-        }
 
-        case 4: if (menuChoice == 4){
+
+        case 4: //Quits the program
             exit(0);
-        }
 
         default:
             cout << menuChoice << " is not a valid choice. " << endl;
@@ -90,13 +94,13 @@ int main()
         system("CLS");
     }
 
-} while (menuChoice != 4); //Might have to reorder the code here to get a menu choice initialization
-
-    // End of program
+} while (menuChoice != 4);
 
     //	Make sure we place the end message on a new line
     cout << "The program has ended" << endl;
     cout << endl;
+
+    system("PAUSE");
 
     return 0;
 }
@@ -122,8 +126,36 @@ NOTE:	students[] and grades[] are meant to be parralel arrays. students[0] and g
 
 int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string fileName, int maxStudents)
 {
+    ifstream inFile; //Establishes the input file stream
+    string studentNames; //contains the student names
+    int studentGrades;   //contains the student grades
+    int numStudents = 0; //Number of students read in
 
-    return 0;	// for stub out purposes, change this in your code
+    //Opening the file
+    inFile.open(FILENAME);
+
+    //Throws an exception if the file cannot be opened
+    if(!inFile){
+        throw "File failed to open";
+    }
+
+    //Looping throw each row to process the data in the file
+    for (int i = 0; i < maxStudents && (inFile >> studentNames >> studentGrades); i++, numStudents ++){
+
+        //Linking the student names with their respective grades
+        students[i] = studentNames + " " + studentGrades;
+
+        //Loop through all of the student grades in each row
+        for (int j = 0; j < MAX_GRADES; j++){
+            inFile >> grades[i][j];
+        }
+
+    }//Outer for loop delimiter
+
+    //Closing the file
+    inFile.close();
+
+    return numStudents;	// for stub out purposes, change this in your code
 }
 
 /***********************************************************
@@ -139,22 +171,30 @@ POST:	table of student names, averages, and letter grades is displayed
 
 void displayAverages(string students[], int grades[][MAX_GRADES], int studentCount)
 {
-    //Must be a nested for loop because the array from file is a two dimensional array
+    double average, sum = 0; //Initializes average variable, zeroes inner loop accumulator
+    int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
 
-    int Count; //Counting variable for the outer for loop
-    for (Count = 0; Count <= studentCount; Count++){
+    //Header table
+    cout << setprecision(1) << fixed << showpoint;
+    cout << "\n\nGrade Averages\n";
+    cout << setw(maxNameLength + 1) << left << "Name"
+    << setw(25) << right << "Average" << setw(4) << right << "Letter Grade";
+    cout << endl << endl;
+
+    //Must be a nested for loop because the array from file is a two dimensional array
+    for (int Count = 0; Count <= studentCount; Count++){
+
+        //Outputting the student name in each row
+        cout << setw(maxNameLength + 1) << left << students[Count];
 
         //Inner loop definition to average out the score per student
-        int count;
-        double average, sum = 0;
-
-        for (count = 0; count < MAX_GRADES; count++){
+        for (int count = 0; count < MAX_GRADES; count++){
             sum = sum + grades[studentCount][count];
         } //Inner For loop delimiter
 
-        average = sum/MAX_GRADES; //Contains the average grade as a double
-        char gradeLetter = getLetterGrade(average); //Passes the average into the LetterGrade function, assigned to a
-                                                    //character variable
+        average = sum/ static_cast<double>(MAX_GRADES); //Contains the average grade as a double
+        char gradeLetter = getLetterGrade(average);     //Passes the average into the LetterGrade function, assigned to a
+                                                        //character variable
 
         cout << setw(25) << students[Count] << ": " << setw(4) << right << average
             << setw(4) << right << gradeLetter << endl; //formatted display
@@ -177,17 +217,22 @@ POST:	table of student names, maximum grades, and letter grades is displayed
 ************************************************************/
 
 void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
-
 //Bubble sorting achieves the maximum display
 //Must be a nested for loop because the array from file is a two dimensional array
 {
-    int Count; //Counting variable for the outer for loop
-    for (Count = 0; Count <= studentCount; Count++) {
+    double highest; //Contains the highest grade per student
+    int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
 
-        int count; //counting variable for the inner loop
-        double highest;
+    //Header table
+    cout << setprecision(1) << fixed << showpoint;
+    cout << "\n\nGrade Averages\n";
+    cout << setw(maxNameLength + 1) << left << "Name"
+         << setw(25) << right << "Average" << setw(4) << right << "Letter Grade";
+    cout << endl << endl;
+
+    for (int Count = 0; Count <= studentCount; Count++) {
         highest = grades[Count][0];
-        for (count = 1; count < MAX_GRADES; count++) {
+        for (int count = 1; count < MAX_GRADES; count++) {
 
             if (grades[Count][count] > highest) {
                 highest = grades[Count][count];
@@ -215,18 +260,16 @@ POST:	table of student names, minimum grades, and letter grades is displayed
 ************************************************************/
 
 void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
-
 //Bubble sorting achieves the minimum display
 //Must be a nested for loop because the array from file is a two dimensional array
-
 {
-    int Count; //Counting variable for the outer for loop
-    for (Count = 0; Count <= studentCount; Count++) {
+    double lowest;
+    int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
 
-        int count;
-        double lowest;
+    for (int Count = 0; Count <= studentCount; Count++) {
+
         lowest = grades[Count][0];
-        for (count = 1; count < MAX_GRADES; count++) {
+        for (int count = 1; count < MAX_GRADES; count++) {
 
             if (grades[Count][count] < lowest) {
                 lowest = grades[Count][count];
