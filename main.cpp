@@ -38,10 +38,10 @@ int main()
     try{
         numberOfStudents = loadStudentNamesGrades(studentNames, studentGrades, FILENAME, MAX_STUDENTS);
     }
-    catch(const char* e){
-        cout << e << endl << endl;
+    catch(const char* errorMessage){
+        cout << errorMessage << endl;
         system("PAUSE");
-        return 0;
+        exit(EXIT_FAILURE);
     }
 
     // Loop until user says to quit
@@ -98,7 +98,7 @@ int main()
     cout << "The program has ended" << endl;
     cout << endl;
 
-    system("PAUSE");
+    //system("PAUSE");
 
     return 0;
 }
@@ -124,10 +124,10 @@ NOTE:	students[] and grades[] are meant to be parralel arrays. students[0] and g
 
 int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string fileName, int maxStudents)
 {
-    ifstream inFile; //Establishes the input file stream
-    string studentNames; //contains the student names
+    ifstream inFile;        //Establishes the input file stream
+    string studentNames;    //contains the student names
     string studentGrades;   //contains the student grades
-    int numStudents = 0; //Number of students read in
+    int numStudents = 0;    //Number of students read in
 
     //Opening the file
     inFile.open(fileName);
@@ -141,7 +141,7 @@ int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string f
     for (int i = 0; i < maxStudents && (inFile >> studentNames >> studentGrades); i++, numStudents ++){
 
         //Linking the student names with their respective grades
-        students[i] = studentNames/*.append(studentGrades)*/ + " " + studentGrades;
+        students[i] = studentNames + " " + studentGrades;
 
         //Loop through all of the student grades in each row
         for (int j = 0; j < MAX_GRADES; j++){
@@ -152,6 +152,17 @@ int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string f
 
     //Closing the file
     inFile.close();
+
+    //Testing the output
+    for (int i = 0; i < numStudents; i++){
+        cout << students[i] << " ";
+
+        for (int j = 0; j < MAX_GRADES; j++){
+            cout << grades[i][j] << " ";
+
+        }
+        cout << endl;
+    }
 
     return numStudents;	// for stub out purposes, change this in your code
 }
@@ -180,22 +191,23 @@ void displayAverages(string students[], int grades[][MAX_GRADES], int studentCou
     cout << endl << endl;
 
     //Must be a nested for loop because the array from file is a two dimensional array
-    for (int Count = 0; Count <= studentCount; Count++){
+    for (int Count = 0; Count < studentCount; Count++){
 
         //Outputting the student name in each row
         cout << setw(maxNameLength + 1) << left << students[Count];
 
         //Inner loop definition to average out the score per student
         for (int count = 0; count < MAX_GRADES; count++){
-            sum = sum + grades[studentCount][count];
+            sum = sum + grades[Count][count];
+
         } //Inner For loop delimiter
 
-        average = sum/ static_cast<double>(MAX_GRADES); //Contains the average grade as a double
+        average = static_cast<double>(sum)/MAX_GRADES; //Contains the average grade as a double
         char gradeLetter = getLetterGrade(average);     //Passes the average into the LetterGrade function, assigned to a
                                                         //character variable
 
-        cout << setw(25) << students[Count] << ": " << setw(4) << right << average
-            << setw(4) << right << gradeLetter << endl; //formatted display
+        cout << setw(8) << right << ": "  << average
+            << setw(10) <<  gradeLetter << endl; //formatted display
 
     }//Outer for loop delimiter
 
