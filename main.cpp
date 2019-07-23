@@ -25,6 +25,7 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount);
 void displayMin(string students[], int grades[][MAX_GRADES], int studentCount);
 char getLetterGrade(double grade);
 int getLongestNameLength(string students[], int studentCount);
+int displayHeading(string reportTitle, string secondColumnName, int secondColumnwidth, int thirdColumnWidth, string students[], int studentCount);
 
 int main()
 {
@@ -180,21 +181,19 @@ POST:	table of student names, averages, and letter grades is displayed
 
 void displayAverages(string students[], int grades[][MAX_GRADES], int studentCount)
 {
-    double average, sum = 0; //Initializes average variable, zeroes inner loop accumulator
-    int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
+    double average, sum = 0;                                            //Initializes average variable, zeroes inner loop accumulator
+    //int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
 
-    //Header table
+    //Setup header table
+    int maxLength = displayHeading("Grade Averages", "Average", 4, 10, students, studentCount);
+
     cout << setprecision(1) << fixed << showpoint;
-    cout << "\n\nGrade Averages\n";
-    cout << setw(maxNameLength + 1) << left << "Name"
-    << setw(25) << right << "Average" << setw(4) << right << "Letter Grade";
-    cout << endl << endl;
 
     //Must be a nested for loop because the array from file is a two dimensional array
     for (int Count = 0; Count < studentCount; Count++){
 
         //Outputting the student name in each row
-        cout << setw(maxNameLength + 1) << left << students[Count];
+        cout << setw(maxLength + 1) << left << students[Count];
 
         //Inner loop definition to average out the score per student
         for (int count = 0; count < MAX_GRADES; count++){
@@ -210,8 +209,6 @@ void displayAverages(string students[], int grades[][MAX_GRADES], int studentCou
             << setw(10) <<  gradeLetter << endl; //formatted display
 
     }//Outer for loop delimiter
-
-
 
 }
 
@@ -231,16 +228,16 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
 //Must be a nested for loop because the array from file is a two dimensional array
 {
     double highest; //Contains the highest grade per student
-    int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
+    //int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
 
-    //Header table
-    cout << setprecision(1) << fixed << showpoint;
-    cout << "\n\nHighest Grade\n";
-    cout << setw(maxNameLength + 1) << left << "Name"
-         << setw(25) << right << "Highest Grade" << setw(4) << right << "Letter Grade";
-    cout << endl << endl;
+    //Setup header table
+    int maxLength = displayHeading("Maximum Grade", "Max", 4, 10, students, studentCount);
 
-    for (int Count = 0; Count <= studentCount; Count++) {
+
+    for (int Count = 0; Count < studentCount; Count++) {
+
+        //Output the name of the month in the first column
+        cout << setw(maxLength + 1) << left << students[Count];
         highest = grades[Count][0];
         for (int count = 1; count < MAX_GRADES; count++) {
 
@@ -252,8 +249,8 @@ void displayMax(string students[], int grades[][MAX_GRADES], int studentCount)
         char gradeLetter = getLetterGrade(highest); //Passes the highest grade into the LetterGrade function, assigned to a
                                                     //character variable
 
-        cout << setw(25) << students[Count] << ": " << setw(4) << right << highest
-            << setw(4) << right << gradeLetter << endl; //formatted display
+        cout << setw(8) << right << ": "  << highest
+             << setw(10) <<  gradeLetter << endl; //formatted display
 
     }//Outer for loop delimiter
 }
@@ -274,17 +271,15 @@ void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
 //Must be a nested for loop because the array from file is a two dimensional array
 {
     double lowest;                                                    //Holds the lowest grade
-    int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
+    //int maxNameLength = getLongestNameLength(students, studentCount); //Gets the longest name for formatting purposes
 
-    //Header table
-    cout << setprecision(1) << fixed << showpoint;
-    cout << "\n\nLowest Grade\n";
-    cout << setw(maxNameLength + 1) << left << "Name"
-         << setw(25) << right << "Lowest Grade" << setw(4) << right << "Letter Grade";
-    cout << endl << endl;
+    //Setup header table
+    int maxLength = displayHeading("Minimum Grade", "Min", 4, 10, students, studentCount);
 
-    for (int Count = 0; Count <= studentCount; Count++) {
+    for (int Count = 0; Count < studentCount; Count++) {
 
+        //Output name of the month in the first column
+        cout << setw(maxLength + 1) << left << students[Count];
         lowest = grades[Count][0];
         for (int count = 1; count < MAX_GRADES; count++) {
 
@@ -296,8 +291,8 @@ void displayMin(string students[], int grades[][MAX_GRADES], int studentCount)
         char gradeLetter = getLetterGrade(lowest); //Passes the highest grade into the LetterGrade function, assigned to a
                                                     //character variable
 
-        cout << setw(25) << students[Count] << ": " << setw(4) << right << lowest
-            << setw(4) << right << gradeLetter << endl; //formatted display
+        cout << setw(8) << right << ": "  << lowest
+             << setw(10) <<  gradeLetter << endl; //formatted display
 
     }//Outer for loop delimiter
 
@@ -359,5 +354,19 @@ int getLongestNameLength(string students[], int studentCount)
             maxNameLength = students[i].length();
         }
     }
-    return 0;
+    return maxNameLength;
+}
+
+//This function creates the display header
+int displayHeading(string reportTitle, string secondColumnName, int secondColumnwidth, int thirdColumnWidth, string students[], int studentCount){
+
+    int maxNameLength = getLongestNameLength(students, studentCount);
+    if (thirdColumnWidth < 10) thirdColumnWidth = 10;
+
+    cout << "\n\n" << reportTitle << "\n";
+    cout << setw(maxNameLength + 1) << left << "Student Name"
+        << setw(secondColumnwidth) << right << secondColumnName
+        << setw(thirdColumnWidth) << "Condition" << endl;
+
+    return maxNameLength;
 }
