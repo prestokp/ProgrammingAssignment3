@@ -155,7 +155,7 @@ int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string f
     inFile.close();
 
     //Testing the output
-    for (int i = 0; i < numStudents; i++){
+    /*for (int i = 0; i < numStudents; i++){
         cout << students[i] << " ";
 
         for (int j = 0; j < MAX_GRADES; j++){
@@ -163,7 +163,7 @@ int loadStudentNamesGrades(string students[], int grades[][MAX_GRADES], string f
 
         }
         cout << endl;
-    }
+    }*/
 
     return numStudents;	// for stub out purposes, change this in your code
 }
